@@ -35,7 +35,7 @@ class PSGD(Optimizer):
         eta: float >= 0. Step size.
         adaptive_f: Map grad of the original kernel to that of
                     the adaptive kernel.
-        nesterov_arg: Nesterov parameter.
+        nesterov_r: Nesterov parameter.
     """
 
     def __init__(self, pred_t, index_t, eta=0.01,
