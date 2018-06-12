@@ -253,4 +253,4 @@ class AdaptiveKernel(object):
         Return:
             score matrix of shape (?, n_label).
         """
-        return self.model.predict(x_feat, batch_size=self.bs)
+        return self.model.predict(utils.add_index(x_feat), batch_size=self.bs)
