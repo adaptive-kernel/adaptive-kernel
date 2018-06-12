@@ -44,7 +44,7 @@ import kernels, wrapper
 kernel = wrapper.set_f_args(kernels.Gaussian, s=5)
 ```
 
-Next, we initialize the model that uses the adaptive kernel,
+Next, we initialize the model which will learn an adaptive kernel based on the input Gaussian kernel,
 ```
 from adaptive import AdaptiveKernel
 model = AdaptiveKernel(kernel, x_train, n_class, mem_gb=12)
