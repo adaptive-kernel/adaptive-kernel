@@ -117,7 +117,7 @@ class AdaptiveKernel(object):
 
     def __init__(self, kernel, centers, n_label, mem_gb,
                  n_subsample=None, k=None, bs=None,
-                 metric='accuracy', scale=.5, seed=1):
+                 metric='accuracy', seed=1):
         """Assemble learner using adaptive kernel.
 
         Arguments:
@@ -129,7 +129,6 @@ class AdaptiveKernel(object):
             k: top-k eigensystem for preconditioner.
             bs: mini-batch size.
             metric: keras metric, e.g., 'accuracy'.
-            scale: .5 by default for constant related to mse loss.
             seed: random seed.
         """
 
@@ -144,6 +143,7 @@ class AdaptiveKernel(object):
             k = min(n_subsample - 1, 1000)
 
         mem_bytes = mem_gb * 1024**3 - 100 * 1024**2 # preserve 100MB
+	# Has a factor 3 due to tensorflow implementation.
         mem_usages = (d + n_label + 3 * np.arange(n_subsample)) * n * 4
         mG = np.sum(mem_usages < mem_bytes)
 
@@ -164,7 +164,7 @@ class AdaptiveKernel(object):
         	eta = 2 * bs / (beta + (bs - 1) * new_s1)
         else:
         	eta = 0.95 * 2 / new_s1
-        eta = .5 * eta # .5 factor for mse loss
+        eta = .5 * eta # .5 factor for constant related to mse loss
 
         print("n_subsample=%d, mG=%d, eta=%.2f, bs=%d, s1=%.2e, delta=%.2f" %
               (n_subsample, mG, eta, bs, s1, delta))
